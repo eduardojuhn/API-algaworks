@@ -1,9 +1,11 @@
 package com.algaworks.algalog.controller;
 
 import com.algaworks.algalog.dtos.AuthenticationDto;
+import com.algaworks.algalog.dtos.LoginResponseDto;
 import com.algaworks.algalog.dtos.RegisterDto;
 import com.algaworks.algalog.model.User;
 import com.algaworks.algalog.repositories.UserRepository;
+import com.algaworks.algalog.service.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,14 @@ public class AuthenticationController {
     AuthenticationManager authenticationManager;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    TokenService tokenService;
     @PostMapping("/login")
     public ResponseEntity login (@RequestBody @Valid AuthenticationDto data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authentication = authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((User) authentication.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
     @PostMapping("/register")
