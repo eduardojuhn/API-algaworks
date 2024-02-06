@@ -1,6 +1,6 @@
 package com.algaworks.algalog.model;
 
-import com.algaworks.algalog.enums.UserRole;
+import com.algaworks.algalog.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

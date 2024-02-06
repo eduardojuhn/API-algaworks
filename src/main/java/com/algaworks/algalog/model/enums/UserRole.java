@@ -1,4 +1,4 @@
-package com.algaworks.algalog.enums;
+package com.algaworks.algalog.model.enums;
 
 public enum UserRole {
     ADMIN("ADMIN"),
